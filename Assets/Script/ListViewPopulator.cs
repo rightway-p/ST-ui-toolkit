@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 using System.Linq;
 using Unity.Properties;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 public class ListViewPopulator : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ListViewPopulator : MonoBehaviour
     private DummyDatas _repo;
     private ListView _listView;
 
+
     void OnEnable()
     {
         _repo = new DummyDatas(); ;
@@ -19,14 +21,22 @@ public class ListViewPopulator : MonoBehaviour
         _listView = _root.Q<ListView>("ListView");
 
 
+        var testItems = new List<string>
+        {
+            "테스트 아이템 1",
+            "Test Item 2",
+            "이것이 보이면 성공"
+        };
+
         _root.dataSource = _repo;
         _listView.itemsSource = _repo.LocalFiles;
 
-        _listView.makeItem = () => new Label();
-        _listView.bindItem = (item, index) =>
-        {
-            (item as Label).text = _repo.LocalFiles[index].Name;
-        };
+
+        // _listView.makeItem = () => new Label();
+        // _listView.bindItem = (item, index) =>
+        // {
+        //     (item as Label).text = _repo.LocalFiles[index].Name;
+        // };
 
         // 프로브
         _root.schedule.Execute(() =>
